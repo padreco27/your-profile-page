@@ -10,7 +10,7 @@ const Footer = () => (
       </div>
       <div className="flex items-center gap-6">
         <a
-          href="https://instagram.com/presenca__pro"
+          href="https://www.instagram.com/presenca__pro/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-muted-foreground hover:text-primary transition-colors"

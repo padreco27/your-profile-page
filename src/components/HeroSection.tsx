@@ -53,7 +53,7 @@ const HeroSection = () => {
               Fale conosco
             </a>
             <a
-              href="https://instagram.com/presenca__pro"
+              href="https://www.instagram.com/presenca__pro/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-secondary px-8 py-4 font-heading font-semibold text-secondary-foreground transition-all duration-200 hover:bg-muted active:scale-[0.97]"

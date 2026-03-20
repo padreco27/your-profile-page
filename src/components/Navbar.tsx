@@ -18,7 +18,7 @@ const Navbar = () => {
           <a href="#servicos" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Serviços</a>
           <a href="#portfolio" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Portfólio</a>
           <a
-            href="https://instagram.com/presenca__pro"
+            href="https://www.instagram.com/presenca__pro/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110 active:scale-[0.97]"
@@ -41,7 +41,7 @@ const Navbar = () => {
             <a href="#servicos" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-foreground">Serviços</a>
             <a href="#portfolio" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-foreground">Portfólio</a>
             <a
-              href="https://instagram.com/presenca__pro"
+              href="https://www.instagram.com/presenca__pro/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground w-fit"

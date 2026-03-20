@@ -1,0 +1,45 @@
+import { MessageCircle } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+
+const CTASection = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section ref={ref} className="py-24 md:py-32">
+      <div className="container">
+        <div
+          className={`relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-card to-card p-12 md:p-20 text-center ${visible ? "animate-fade-up" : "opacity-0"}`}
+        >
+          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-balance max-w-2xl mx-auto">
+            Pronto para colocar seu negócio{" "}
+            <span className="text-primary">na internet?</span>
+          </h2>
+          <p className="mt-6 text-muted-foreground text-lg max-w-lg mx-auto">
+            Entre em contato e receba um orçamento personalizado para o seu projeto. Sem compromisso.
+          </p>
+          <a
+            href="https://wa.me/5500000000000"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-flex items-center gap-2 rounded-lg bg-primary px-10 py-4 font-heading font-semibold text-primary-foreground transition-all duration-200 hover:brightness-110 active:scale-[0.97] shadow-lg shadow-primary/20"
+          >
+            <MessageCircle className="h-5 w-5" />
+            Solicitar orçamento
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default CTASection;

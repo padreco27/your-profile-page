@@ -18,8 +18,10 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-6">
           <a href="#servicos" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Serviços</a>
           <a href="#portfolio" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Portfólio</a>
+          <a href="#processo" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Processo</a>
           <a href="#depoimentos" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Depoimentos</a>
           <a href="#faq" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">FAQ</a>
+          <a href="#contato" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors text-primary font-bold">Orçamento</a>
           
           <div className="flex items-center gap-4 ml-2 pl-6 border-l border-border/50">
             <ThemeToggle />

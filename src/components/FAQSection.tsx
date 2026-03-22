@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     question: "Vou precisar pagar mensalidade?",
-    answer: "Não cobramos mensalidades de manutenção obrigatórias. Você paga apenas pelo desenvolvimento. Os únicos custos recorrentes externos são a hospedagem e o domínio anual.",
+    answer: "Sim, cobramos uma pequena taxa de manutenção mensal para garantir que seu site esteja sempre seguro e atualizado, além dos custos padrão de hospedagem e domínio anual.",
   },
   {
     question: "O site já vem com SEO para aparecer no Google?",

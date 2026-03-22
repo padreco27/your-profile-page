@@ -27,16 +27,15 @@ const HeroSection = () => {
             className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[0.95] text-balance animate-fade-up"
             style={{ animationDelay: "100ms" }}
           >
-            Levamos seu negócio para o{" "}
-            <span className="text-primary">próximo nível</span>
+            Transforme sua <span className="text-primary italic">presença digital</span> em resultados reais
           </h1>
 
           <p
             className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed animate-fade-up"
             style={{ animationDelay: "200ms" }}
           >
-            Criamos sites profissionais do zero. Simples, rápido e com design
-            que converte visitantes em clientes.
+            Criamos sites profissionais e landing pages de alta performance 
+            que convertem visitantes em clientes fiéis para o seu negócio.
           </p>
 
           <div
@@ -44,22 +43,17 @@ const HeroSection = () => {
             style={{ animationDelay: "300ms" }}
           >
             <a
-              href="https://wa.me/5500000000000"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#contato"
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-8 py-4 font-heading font-semibold text-primary-foreground transition-all duration-200 hover:brightness-110 active:scale-[0.97] shadow-lg shadow-primary/20"
             >
               <MessageCircle className="h-5 w-5" />
-              Fale conosco
+              Solicitar Orçamento
             </a>
             <a
-              href="https://www.instagram.com/presenca__pro/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#portfolio"
               className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-secondary px-8 py-4 font-heading font-semibold text-secondary-foreground transition-all duration-200 hover:bg-muted active:scale-[0.97]"
             >
-              <Instagram className="h-5 w-5" />
-              @presenca__pro
+              Ver Projetos
             </a>
           </div>
         </div>

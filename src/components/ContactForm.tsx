@@ -1,11 +1,11 @@
 import { memo, useState, useRef } from "react";
 import { Send, CheckCircle } from "lucide-react";
-import emailjs from '@emailjs/browser';
 import { useInView } from "@/hooks/use-in-view";
 
 const ContactForm = () => {
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
   const [phone, setPhone] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const { ref, inView: visible } = useInView({ threshold: 0.1 });
 
@@ -29,19 +29,39 @@ const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
+    setError(null);
 
     try {
-      await emailjs.sendForm(
-        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
-        formRef.current!,
-        'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
-      );
+      const formData = new FormData(formRef.current!);
+      const data = {
+        name: formData.get("name") as string,
+        email: formData.get("email") as string,
+        phone: formData.get("phone") as string,
+        message: formData.get("message") as string,
+      };
+
+      const response = await fetch("http://localhost:3002/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Erro ao enviar o formulário");
+      }
+
       setStatus("success");
-    } catch (error) {
-      console.error('Email send failed:', error);
+      setPhone("");
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+    } catch (err) {
+      console.error("Erro ao enviar formulário:", err);
+      setError(err instanceof Error ? err.message : "Erro ao enviar o formulário");
       setStatus("idle");
-      // You might want to show an error message to the user
     }
   };
 
@@ -87,6 +107,11 @@ const ContactForm = () => {
               </div>
             ) : (
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+                {error && (
+                  <div className="rounded-lg bg-destructive/10 border border-destructive/20 p-4 text-sm text-destructive">
+                    {error}
+                  </div>
+                )}
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium">Nome completo</label>
                   <input

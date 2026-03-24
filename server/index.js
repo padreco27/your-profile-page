@@ -50,7 +50,7 @@ app.post('/api/contact', async (req, res) => {
     const templateParams = {
       service_id: process.env.EMAILJS_SERVICE_ID,
       template_id: process.env.EMAILJS_TEMPLATE_ID,
-      user_id: process.env.EMAILJS_PUBLIC_KEY,
+      user_id: process.env.EMAILJS_PRIVATE_KEY,
       template_params: {
         to_email: process.env.EMAILJS_TO_EMAIL || 'felipeglacerdaa@hotmail.com',
         from_name: name,

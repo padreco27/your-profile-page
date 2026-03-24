@@ -11,7 +11,7 @@ const HeroSection = () => {
           alt="Mockup de sites profissionais"
           className="w-full h-full object-cover opacity-30"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-black/20 to-black/10 dark:from-background dark:via-background/90 dark:to-background/60" />
       </div>
 
       <div className="container relative z-10 py-24 md:py-32">
@@ -31,7 +31,7 @@ const HeroSection = () => {
           </h1>
 
           <p
-            className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed animate-fade-up"
+            className="text-lg md:text-xl text-foreground max-w-lg leading-relaxed animate-fade-up"
             style={{ animationDelay: "200ms" }}
           >
             Criamos sites profissionais e landing pages de alta performance 

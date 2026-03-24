@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 
 const testimonials = [
   {
-    name: "Ricardo Santos",
+    name: "Kauan Marques",
     role: "Proprietário de Hamburgueria",
     content: "O que mais me impressionou foi a velocidade de entrega e o design moderno. Meu site agora é o principal canal de vendas direto.",
     rating: 5,

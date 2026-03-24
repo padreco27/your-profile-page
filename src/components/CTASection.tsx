@@ -28,7 +28,7 @@ const CTASection = () => {
             Entre em contato e receba um orçamento personalizado para o seu projeto. Sem compromisso.
           </p>
           <a
-            href="https://wa.me/5500000000000"
+            href="https://wa.me/+553196851692"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 inline-flex items-center gap-2 rounded-lg bg-primary px-10 py-4 font-heading font-semibold text-primary-foreground transition-all duration-200 hover:brightness-110 active:scale-[0.97] shadow-lg shadow-primary/20"

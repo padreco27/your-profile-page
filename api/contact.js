@@ -5,9 +5,17 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_KEY;
 const EMAILJS_API_URL = 'https://api.emailjs.com/api/v1.0/email/send';
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+// Criar cliente Supabase apenas se variáveis estiverem disponíveis
+const supabase = SUPABASE_URL && SUPABASE_KEY 
+  ? createClient(SUPABASE_URL, SUPABASE_KEY)
+  : null;
 
 async function saveContactToDatabase(name, email, phone, message) {
+  if (!supabase) {
+    console.warn('⚠️ Supabase não configurado, pulando salvamento');
+    return null;
+  }
+
   try {
     const { data, error } = await supabase
       .from('contacts')
@@ -32,6 +40,11 @@ async function saveContactToDatabase(name, email, phone, message) {
 
 async function sendEmailViaEmailJS(name, email, phone, message) {
   try {
+    // Verificar se credenciais do EmailJS estão configuradas
+    if (!process.env.EMAILJS_SERVICE_ID || !process.env.EMAILJS_TEMPLATE_ID) {
+      throw new Error('Credenciais EmailJS não configuradas');
+    }
+
     const templateParams = {
       service_id: process.env.EMAILJS_SERVICE_ID,
       template_id: process.env.EMAILJS_TEMPLATE_ID,
@@ -51,7 +64,7 @@ async function sendEmailViaEmailJS(name, email, phone, message) {
 
     return response.data;
   } catch (error) {
-    console.error('Erro ao enviar email:', error.message);
+    console.error('❌ Erro ao enviar email:', error.response?.data || error.message);
     throw error;
   }
 }
@@ -65,6 +78,8 @@ module.exports = async function handler(req, res) {
     'Access-Control-Allow-Headers',
     'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
   );
+
+  console.log(`📨 Método: ${req.method}`);
 
   // Lidar com OPTIONS (preflight)
   if (req.method === 'OPTIONS') {
@@ -80,6 +95,8 @@ module.exports = async function handler(req, res) {
   try {
     const { name, email, phone, message } = req.body;
 
+    console.log('📋 Dados recebidos:', { name, email, phone });
+
     // Validação
     if (!name || !email || !phone || !message) {
       return res.status(400).json({
@@ -88,6 +105,7 @@ module.exports = async function handler(req, res) {
       });
     }
 
+    // Validar email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({
@@ -97,20 +115,24 @@ module.exports = async function handler(req, res) {
     }
 
     // Salvar no Supabase
+    console.log('💾 Salvando contato...');
     await saveContactToDatabase(name, email, phone, message);
 
     // Enviar email
+    console.log('📧 Enviando email via EmailJS...');
     await sendEmailViaEmailJS(name, email, phone, message);
+
+    console.log('✅ Sucesso!');
 
     return res.status(200).json({
       success: true,
       message: 'Email enviado com sucesso!',
     });
   } catch (error) {
-    console.error('Erro:', error);
+    console.error('❌ ERRO GERAL:', error.message, error.stack);
     return res.status(500).json({
       success: false,
-      error: 'Erro ao processar requisição',
+      error: error.message || 'Erro ao processar requisição',
     });
   }
 }

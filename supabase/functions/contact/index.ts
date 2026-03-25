@@ -75,7 +75,10 @@ serve(async (req) => {
 
   // Handle CORS preflight
   if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+    return new Response(JSON.stringify({ ok: true }), { 
+      status: 200,
+      headers: { ...corsHeaders, "Content-Type": "application/json" } 
+    });
   }
 
   // Apenas POST

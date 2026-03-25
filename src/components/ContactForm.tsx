@@ -40,11 +40,8 @@ const ContactForm = () => {
         message: formData.get("message") as string,
       };
 
-      // Usar Supabase Edge Function em produção, ou servidor Express em dev
-      const endpoint = 
-        import.meta.env.MODE === 'production'
-          ? 'https://uoceecsreeiemovrdweo.functions.supabase.co/contact'
-          : 'http://localhost:3002/api/contact';
+      // Em dev usa servidor local, em produção usa Vercel Serverless Functions
+      const endpoint = '/api/contact';
       
       const response = await fetch(endpoint, {
         method: "POST",

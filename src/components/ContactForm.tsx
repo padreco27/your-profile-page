@@ -40,10 +40,10 @@ const ContactForm = () => {
         message: formData.get("message") as string,
       };
 
-      // Em dev usa servidor local (localhost:3002), em produção a Vercel redireciona via vercel.json
+      // Em dev usa servidor local (localhost:3002), em produção usa backend do Render diretamente
       const isProduction = import.meta.env.PROD;
       const endpoint = isProduction
-        ? '/api/contact'
+        ? 'https://your-profile-page-api.onrender.com/api/contact'
         : 'http://localhost:3002/api/contact';
       
       const response = await fetch(endpoint, {

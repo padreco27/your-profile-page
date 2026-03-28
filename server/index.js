@@ -186,6 +186,14 @@ app.use((req, res) => {
   });
 });
 
+// Handler 404 para rotas não encontradas
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    error: 'Rota não encontrada',
+  });
+});
+
 // Iniciar servidor
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);

@@ -114,6 +114,7 @@ const ContactForm = () => {
                 <CheckCircle className="h-16 w-16 text-primary mb-4 animate-bounce" />
                 <h3 className="font-heading text-2xl font-bold mb-2">Muito Obrigado</h3>
                 <p className="text-muted-foreground">Somente estar aguardando, vamos estar entrando em contato com você.</p>
+                  <p className="text-muted-foreground mt-2">Enquanto isso, que tal dar uma olhada em alguns dos nossos projetos anteriores?</p>
                 <button 
                   onClick={() => setStatus("idle")}
                   className="mt-8 text-primary font-semibold hover:underline"

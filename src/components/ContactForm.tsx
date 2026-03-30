@@ -1,81 +1,56 @@
+
 import { memo, useState, useRef } from "react";
 import { Send, CheckCircle } from "lucide-react";
 import { useInView } from "@/hooks/use-in-view";
 
 const ContactForm = () => {
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [status, setStatus] = useState("idle");
   const [phone, setPhone] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const formRef = useRef<HTMLFormElement>(null);
+  const [error, setError] = useState(null);
+  const formRef = useRef(null);
   const { ref, inView: visible } = useInView({ threshold: 0.1 });
 
-  const formatPhone = (value: string) => {
+  const formatPhone = (value) => {
     const numbers = value.replace(/\D/g, "");
     let formatted = numbers;
-    
-    if (numbers.length > 0) {
-      if (numbers.length <= 2) {
-        formatted = numbers;
-      } else if (numbers.length <= 7) {
-        formatted = `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
-      } else {
-        formatted = `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
-      }
+    if (numbers.length > 2 && numbers.length <= 7) {
+      formatted = `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+    } else if (numbers.length > 7) {
+      formatted = `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
     }
-    
     setPhone(formatted);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("submitting");
     setError(null);
-
     try {
-      const formData = new FormData(formRef.current!);
-      const data = {
-        name: formData.get("name") as string,
-        email: formData.get("email") as string,
-        phone: formData.get("phone") as string,
-        message: formData.get("message") as string,
-      };
-
-      // Em dev usa servidor local (localhost:3002), em produção usa backend do Render diretamente
-      const isProduction = import.meta.env.PROD;
-      const endpoint = isProduction
+      const formData = new FormData(formRef.current);
+      const data = Object.fromEntries(formData.entries());
+      const endpoint = import.meta.env.PROD
         ? 'https://your-profile-page-api.onrender.com/api/contact'
         : 'http://localhost:3002/api/contact';
-      
       const response = await fetch(endpoint, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Erro ao enviar o formulário");
       }
-
-      const result = await response.json();
+      await response.json();
       setStatus("success");
       setPhone("");
-      if (formRef.current) {
-        formRef.current.reset();
-      }
+      formRef.current?.reset();
     } catch (err) {
-      console.error("Erro ao enviar formulário:", err);
-      
       let errorMessage = "Erro ao enviar o formulário";
-      
       if (err instanceof TypeError && err.message.includes("Failed to fetch")) {
         errorMessage = "Servidor não alcançável. Certifique-se que o servidor está rodando (npm run server:dev)";
       } else if (err instanceof Error) {
         errorMessage = err.message;
       }
-      
       setError(errorMessage);
       setStatus("idle");
     }
@@ -93,92 +68,53 @@ const ContactForm = () => {
               Preencha o formulário e entraremos em contato em até 24 horas úteis com uma proposta personalizada.
             </p>
             <div className="space-y-4">
-              <div className="flex items-center gap-3 text-muted-foreground">
-                <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>Atendimento 100% humanizado</span>
-              </div>
-              <div className="flex items-center gap-3 text-muted-foreground">
-                <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>Análise gratuita do seu negócio</span>
-              </div>
-              <div className="flex items-center gap-3 text-muted-foreground">
-                <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>Propostas sob medida</span>
-              </div>
+              {["Atendimento 100% humanizado", "Análise gratuita do seu negócio", "Propostas sob medida"].map((txt) => (
+                <div key={txt} className="flex items-center gap-3 text-muted-foreground">
+                  <div className="h-2 w-2 rounded-full bg-primary" />
+                  <span>{txt}</span>
+                </div>
+              ))}
             </div>
           </div>
-
           <div className={`bg-card rounded-2xl border border-border p-8 shadow-xl transition-all duration-700 ${visible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: "200ms" }}>
             {status === "success" ? (
               <div className="text-center py-12 flex flex-col items-center">
                 <CheckCircle className="h-16 w-16 text-primary mb-4 animate-bounce" />
                 <h3 className="font-heading text-2xl font-bold mb-2">Muito Obrigado</h3>
                 <p className="text-muted-foreground">Somente estar aguardando, vamos estar entrando em contato com você.</p>
-                  <p className="text-muted-foreground mt-2">Por favor, verifique sua caixa de entrada. caso não receba e-mail verifique sua pasta de spam.</p>
-                <button 
-                  onClick={() => setStatus("idle")}
-                  className="mt-8 text-primary font-semibold hover:underline"
-                >
+                <p className="text-muted-foreground mt-2">Por favor, verifique sua caixa de entrada. caso não receba e-mail verifique sua pasta de spam.</p>
+                <button onClick={() => setStatus("idle")}
+                  className="mt-8 text-primary font-semibold hover:underline">
                   Enviar outra mensagem
                 </button>
               </div>
             ) : (
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
                 {error && (
-                  <div className="rounded-lg bg-destructive/10 border border-destructive/20 p-4 text-sm text-destructive">
-                    {error}
-                  </div>
+                  <div className="rounded-lg bg-destructive/10 border border-destructive/20 p-4 text-sm text-destructive">{error}</div>
                 )}
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium">Nome completo</label>
-                  <input
-                    id="name"
-                    name="name"
-                    required
-                    placeholder="Como podemos te chamar?"
-                    className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                  />
+                  <input id="name" name="name" required placeholder="Como podemos te chamar?"
+                    className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all" />
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-sm font-medium">E-mail profissional</label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    placeholder="nome@empresa.com.br"
-                    className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                  />
+                  <input id="email" name="email" type="email" required placeholder="nome@empresa.com.br"
+                    className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all" />
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="phone" className="text-sm font-medium">Número de telefone</label>
-                  <input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => formatPhone(e.target.value)}
-                    required
-                    placeholder="(11) 99999-9999"
-                    className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                  />
+                  <input id="phone" name="phone" type="tel" value={phone} onChange={e => formatPhone(e.target.value)} required placeholder="(11) 99999-9999"
+                    className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all" />
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="message" className="text-sm font-medium">Conte-nos sobre sua ideia</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    rows={4}
-                    placeholder="Quais seus objetivos com o novo site?"
-                    className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none"
-                  />
+                  <textarea id="message" name="message" required rows={4} placeholder="Quais seus objetivos com o novo site?"
+                    className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none" />
                 </div>
-                <button
-                  type="submit"
-                  disabled={status === "submitting"}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-4 font-heading font-semibold text-primary-foreground transition-all duration-200 hover:brightness-110 active:scale-[0.97] shadow-lg shadow-primary/20 disabled:opacity-70"
-                >
+                <button type="submit" disabled={status === "submitting"}
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-4 font-heading font-semibold text-primary-foreground transition-all duration-200 hover:brightness-110 active:scale-[0.97] shadow-lg shadow-primary/20 disabled:opacity-70">
                   {status === "submitting" ? (
                     <>
                       <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />

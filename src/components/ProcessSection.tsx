@@ -27,36 +27,24 @@ const steps = [
 
 const ProcessSection = () => {
   const { ref, inView: visible } = useInView({ threshold: 0.1 });
-
   return (
     <section ref={ref} id="processo" className="py-24 md:py-32">
       <div className="container">
         <div className="text-center max-w-xl mx-auto mb-16">
-          <h2 className={`font-heading text-3xl md:text-4xl font-bold tracking-tight transition-all duration-700 ${visible ? "animate-fade-up" : "opacity-0"}`}>
-            Como trabalhamos
-          </h2>
+          <h2 className={`font-heading text-3xl md:text-4xl font-bold tracking-tight transition-all duration-700 ${visible ? "animate-fade-up" : "opacity-0"}`}>Como trabalhamos</h2>
           <p className={`mt-4 text-muted-foreground text-lg transition-all duration-700 ${visible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: "100ms" }}>
             Um processo claro e eficiente para garantir o melhor resultado.
           </p>
         </div>
-
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 relative">
-          {/* Connector line for desktop */}
           <div className="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 bg-border -translate-y-1/2 z-0" />
-          
           {steps.map((step, i) => (
-            <div
-              key={i}
-              className={`relative z-10 flex flex-col items-center text-center transition-all duration-700 ${visible ? "animate-fade-up" : "opacity-0"}`}
-              style={{ animationDelay: `${200 + i * 150}ms` }}
-            >
+            <div key={i} className={`relative z-10 flex flex-col items-center text-center transition-all duration-700 ${visible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: `${200 + i * 150}ms` }}>
               <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-xl shadow-primary/20 border-4 border-background">
                 <step.icon className="h-8 w-8" />
               </div>
               <h3 className="font-heading text-xl font-bold mb-3">{step.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed max-w-[200px]">
-                {step.description}
-              </p>
+              <p className="text-muted-foreground text-sm leading-relaxed max-w-[200px]">{step.description}</p>
             </div>
           ))}
         </div>

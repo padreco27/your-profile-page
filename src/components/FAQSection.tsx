@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     question: "O site será otimizado para celulares?",
-    answer: "Sim! Todos os nossos projetos são 100% responsivos, o que significa que se adaptam perfeitamente a qualquer tamanho de tela (celulares, tablets e computadores).",
+    answer: "Sim! Todos os nossos projetos são 100% responsivos, adaptando-se a qualquer tela.",
   },
   {
     question: "Vou precisar pagar mensalidade?",
@@ -28,19 +28,15 @@ const faqs = [
 
 const FAQSection = () => {
   const { ref, inView: visible } = useInView({ threshold: 0.1 });
-
   return (
     <section ref={ref} id="faq" className="py-24 md:py-32 bg-secondary/20">
       <div className="container max-w-3xl">
         <div className="text-center mb-16">
-          <h2 className={`font-heading text-3xl md:text-4xl font-bold tracking-tight transition-all duration-700 ${visible ? "animate-fade-up" : "opacity-0"}`}>
-            Perguntas Frequentes
-          </h2>
+          <h2 className={`font-heading text-3xl md:text-4xl font-bold tracking-tight transition-all duration-700 ${visible ? "animate-fade-up" : "opacity-0"}`}>Perguntas Frequentes</h2>
           <p className={`mt-4 text-muted-foreground text-lg transition-all duration-700 ${visible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: "100ms" }}>
             Tire suas principais dúvidas sobre o nosso processo.
           </p>
         </div>
-
         <Accordion type="single" collapsible className={`w-full transition-all duration-700 ${visible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: "200ms" }}>
           {faqs.map((faq, i) => (
             <AccordionItem key={i} value={`item-${i}`} className="border-border/60">

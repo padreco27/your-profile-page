@@ -14,7 +14,6 @@ const navLinks = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-lg">
       <div className="container flex h-16 items-center justify-between">
@@ -22,34 +21,18 @@ const Navbar = () => {
           <img src={logo} alt="Presença Pro" className="h-7 w-7 dark:invert" />
           <span className="font-heading font-bold text-lg">Presença Pro</span>
         </a>
-
-        {/* Desktop */}
         <div className="hidden md:flex items-center gap-6">
           {navLinks.map(({ href, label, special }) => (
-            <a
-              key={href}
-              href={href}
-              className={`text-sm font-medium transition-colors ${special ? "text-primary font-bold" : "text-muted-foreground hover:text-foreground"}`}
-            >
-              {label}
-            </a>
+            <a key={href} href={href} className={`text-sm font-medium transition-colors ${special ? "text-primary font-bold" : "text-muted-foreground hover:text-foreground"}`}>{label}</a>
           ))}
-
           <div className="flex items-center gap-4 ml-2 pl-6 border-l border-border/50">
             <ThemeToggle />
-            <a
-              href="https://www.instagram.com/presenca__pro/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110 active:scale-[0.97]"
-            >
+            <a href="https://www.instagram.com/presenca__pro/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110 active:scale-[0.97]">
               <Instagram className="h-4 w-4" />
               Instagram
             </a>
           </div>
         </div>
-
-        {/* Mobile toggle */}
         <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle />
           <button onClick={() => setOpen(!open)} className="text-foreground p-2" aria-label="Menu">

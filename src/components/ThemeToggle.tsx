@@ -5,16 +5,11 @@ import { Button } from "@/components/ui/button";
 
 const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-
   return (
     <Button
       variant="ghost"
       size="icon"
-      onClick={toggleTheme}
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className="rounded-full w-10 h-10 hover:bg-primary/10 hover:text-primary transition-colors duration-300"
       aria-label="Alternar tema"
     >

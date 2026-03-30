@@ -10,28 +10,14 @@ const Footer = () => (
         <span className="font-heading font-semibold text-lg">Presença Pro</span>
       </div>
       <div className="flex items-center gap-6">
-        <a
-          href="https://www.instagram.com/presenca__pro/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-muted-foreground hover:text-primary transition-colors"
-          aria-label="Instagram"
-        >
+        <a href="https://www.instagram.com/presenca__pro/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Instagram">
           <Instagram className="h-5 w-5" />
         </a>
-        <a
-          href="https://wa.me/+553196851692"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-muted-foreground hover:text-primary transition-colors"
-          aria-label="WhatsApp"
-        >
+        <a href="https://wa.me/+553196851692" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors" aria-label="WhatsApp">
           <MessageCircle className="h-5 w-5" />
         </a>
       </div>
-      <p className="text-sm text-muted-foreground">
-        © {new Date().getFullYear()} Presença Pro. Todos os direitos reservados.
-      </p>
+      <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Presença Pro. Todos os direitos reservados.</p>
     </div>
   </footer>
 );

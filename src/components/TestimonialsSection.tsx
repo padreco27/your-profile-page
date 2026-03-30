@@ -32,27 +32,17 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   const { ref, inView: visible } = useInView({ threshold: 0.1 });
-
   return (
     <section ref={ref} id="depoimentos" className="py-24 md:py-32 overflow-hidden">
       <div className="container">
         <div className="text-center max-w-xl mx-auto mb-16">
-          <h2 className={`font-heading text-3xl md:text-4xl font-bold tracking-tight transition-all duration-700 ${visible ? "animate-fade-up" : "opacity-0"}`}>
-            O que dizem nossos clientes
-          </h2>
+          <h2 className={`font-heading text-3xl md:text-4xl font-bold tracking-tight transition-all duration-700 ${visible ? "animate-fade-up" : "opacity-0"}`}>O que dizem nossos clientes</h2>
           <p className={`mt-4 text-muted-foreground text-lg transition-all duration-700 ${visible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: "100ms" }}>
             A confiança é o que move nossos projetos e parcerias.
           </p>
         </div>
-
         <div className={`relative px-12 transition-all duration-700 ${visible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: "200ms" }}>
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full max-w-4xl mx-auto"
-          >
+          <Carousel opts={{ align: "start", loop: true }} className="w-full max-w-4xl mx-auto">
             <CarouselContent>
               {testimonials.map((t, i) => (
                 <CarouselItem key={i} className="md:basis-1/2 lg:basis-1/2 p-4">
